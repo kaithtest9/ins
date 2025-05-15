@@ -14,7 +14,6 @@ dist/
 # TSOA (TypeScript OpenAPI) 生成的文件
 # 这些文件通常在构建过程中生成，不建议提交到版本库
 src/generated/
-swagger.json
 
 # Environment variables
 # 包含敏感信息和特定环境配置，绝不应提交

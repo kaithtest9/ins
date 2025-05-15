@@ -1,0 +1,67 @@
+# Node.js & npm/yarn
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.pnp.*
+
+# TypeScript
+dist/
+*.tsbuildinfo
+# tsconfig.tsbuildinfo (更具体的文件名，如果生成的话)
+
+# TSOA (TypeScript OpenAPI) 生成的文件
+# 这些文件通常在构建过程中生成，不建议提交到版本库
+src/generated/
+swagger.json
+
+# Environment variables
+# 包含敏感信息和特定环境配置，绝不应提交
+.env
+.env.*
+!.env.example # 如果您有 .env.example 文件，确保它不被忽略
+
+# IDE & Editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*~
+*.bak
+
+# Operating System specific files
+.DS_Store # macOS
+Thumbs.db # Windows
+ehthumbs.db # Windows
+
+# Log files
+*.log
+logs/
+*.log.*
+
+# Coverage reports (e.g., from Jest, nyc)
+coverage/
+.nyc_output/
+
+# Build output (通用，如果您的项目有其他构建输出)
+build/
+
+# Drizzle ORM (可选，但通常不忽略)
+# drizzle_migrations/ # 数据库迁移文件通常应该被版本控制，以便团队协作和环境同步。
+# 如果您确实不想提交迁移文件（不推荐），则取消注释上面这行。
+
+# 临时文件或个人配置文件
+*.local
+*.tmp
+
+# 备注:
+# 1. package-lock.json 或 yarn.lock: 这些文件通常应该被提交到版本库，以确保依赖版本的一致性。
+#    因此，它们没有被添加到此 .gitignore 文件中。
+# 2. drizzle_migrations/: 如上所述，强烈建议将Drizzle生成的迁移文件提交到版本库。
+#    它们是数据库结构变更的“源码”。

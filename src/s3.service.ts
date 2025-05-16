@@ -10,6 +10,7 @@ const s3Client = new S3Client({
         accessKeyId: config.AWS_ACCESS_KEY_ID,
         secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
     },
+    endpoint: "https://objstorage.leapcell.io", // Optional: If using a custom S3 endpoint
 });
 
 // PresignedUrlResponse 和 generatePresignedUploadUrl 不再需要，可以移除或注释掉
@@ -40,32 +41,38 @@ export const uploadBase64ToS3 = async (
     fileType: string,
     customKey?: string
 ): Promise<UploadBase64Response> => {
+    console.log("Uploading base64 data to S3...");
     if (!config.S3_BUCKET_NAME) {
         throw new Error("S3_BUCKET_NAME is not configured.");
     }
+    console.log("S3_BUCKET_NAME:", config.S3_BUCKET_NAME);
     if (!fileType.startsWith('image/')) {
         throw new Error("Invalid fileType. Must be an image MIME type (e.g., image/jpeg, image/png).");
     }
 
     // Decode Base64 string to Buffer
     const buffer = Buffer.from(base64Data, 'base64');
+    console.log("Buffer length:", buffer.length);
 
     // Determine file extension from MIME type
     const extension = fileType.split('/')[1] || 'tmp';
     const objectKey = customKey || `uploads/images/${uuidv4()}.${extension}`;
 
+    console.log("Generated S3 object key:", objectKey);
     const command = new PutObjectCommand({
         Bucket: config.S3_BUCKET_NAME,
         Key: objectKey,
         Body: buffer,
         ContentType: fileType,
-        // ACL: 'public-read', // Uncomment if you want uploaded objects to be publicly readable by default
-                                // Alternatively, manage bucket policy for public access.
     });
 
     try {
+        console.log("Sending S3 upload command...");
         const s3Response = await s3Client.send(command);
+
         const s3ObjectUrl = getPublicS3Url(objectKey); // Use existing helper
+
+        console.log("S3 upload result:", s3Response);
 
         return {
             s3ObjectKey: objectKey,
@@ -83,5 +90,5 @@ export const getPublicS3Url = (objectKey: string): string => {
         console.warn("S3 bucket name or region not configured for public URL construction.");
         return objectKey;
     }
-    return `https://${config.S3_BUCKET_NAME}.s3.${config.AWS_REGION}.amazonaws.com/${objectKey}`;
+    return `https://1xg7ah.leapcellobj.com/myobj-74ft-tzmo-yj2gugcj/${objectKey}`;
 };

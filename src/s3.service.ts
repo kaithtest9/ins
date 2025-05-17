@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import config from "./config";
 
 const s3Client = new S3Client({
-    region: config.AWS_REGION,
+    region: config.OBJECT_STORAGE_REGION,
     credentials: {
-        accessKeyId: config.AWS_ACCESS_KEY_ID,
-        secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+        accessKeyId: config.OBJECT_STORAGE_ACCESS_KEY_ID,
+        secretAccessKey: config.OBJECT_STORAGE_SECRET_ACCESS_KEY,
     },
     endpoint: "https://objstorage.leapcell.io", // Optional: If using a custom S3 endpoint
 });
@@ -42,10 +42,10 @@ export const uploadBase64ToS3 = async (
     customKey?: string
 ): Promise<UploadBase64Response> => {
     console.log("Uploading base64 data to S3...");
-    if (!config.S3_BUCKET_NAME) {
+    if (!config.OBJECT_STORAGE_BUCKET_NAME) {
         throw new Error("S3_BUCKET_NAME is not configured.");
     }
-    console.log("S3_BUCKET_NAME:", config.S3_BUCKET_NAME);
+    console.log("S3_BUCKET_NAME:", config.OBJECT_STORAGE_BUCKET_NAME);
     if (!fileType.startsWith('image/')) {
         throw new Error("Invalid fileType. Must be an image MIME type (e.g., image/jpeg, image/png).");
     }
@@ -60,7 +60,7 @@ export const uploadBase64ToS3 = async (
 
     console.log("Generated S3 object key:", objectKey);
     const command = new PutObjectCommand({
-        Bucket: config.S3_BUCKET_NAME,
+        Bucket: config.OBJECT_STORAGE_BUCKET_NAME,
         Key: objectKey,
         Body: buffer,
         ContentType: fileType,
@@ -86,8 +86,8 @@ export const uploadBase64ToS3 = async (
 };
 
 export const getPublicS3Url = (objectKey: string): string => {
-    if (!config.S3_BUCKET_NAME || !config.AWS_REGION) {
-        console.warn("S3 bucket name or region not configured for public URL construction.");
+    if (!config.OBJECT_STORAGE_BUCKET_NAME || !config.OBJECT_STORAGE_REGION) {
+        console.warn("Object Storage bucket name or region not configured for public URL construction.");
         return objectKey;
     }
     return `https://1xg7ah.leapcellobj.com/myobj-74ft-tzmo-yj2gugcj/${objectKey}`;

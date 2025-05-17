@@ -7,12 +7,12 @@ const config = {
   JWT_SECRET: process.env.JWT_SECRET || 'default_super_secret',
   PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3001,
 
-  // AWS S3 Configuration
-  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
-  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
-  AWS_REGION: process.env.AWS_REGION || '',
-  S3_BUCKET_NAME: process.env.S3_BUCKET_NAME || '',
-  // S3_OBJECT_BASE_URL: process.env.S3_OBJECT_BASE_URL || `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+  // Object Storage Configuration
+  OBJECT_STORAGE_ACCESS_KEY_ID: process.env.OBJECT_STORAGE_ACCESS_KEY_ID || '',
+  OBJECT_STORAGE_SECRET_ACCESS_KEY: process.env.OBJECT_STORAGE_SECRET_ACCESS_KEY || '',
+  OBJECT_STORAGE_REGION: process.env.OBJECT_STORAGE_REGION || '',
+  OBJECT_STORAGE_BUCKET_NAME: process.env.OBJECT_STORAGE_BUCKET_NAME || '',
+  // OBJECT_STORAGE_BASE_URL: process.env.OBJECT_STORAGE_BASE_URL || `https://${process.env.OBJECT_STORAGE_BUCKET_NAME}.s3.${process.env.OBJECT_STORAGE_REGION}.amazonaws.com/`,
 };
 
 // Basic validation for essential configs
@@ -23,10 +23,10 @@ if (!config.DATABASE_URL) {
 if (config.JWT_SECRET === 'default_super_secret') {
   console.warn("WARNING: JWT_SECRET is using a default value. Set a strong secret in your .env file for production.");
 }
-if (!config.AWS_ACCESS_KEY_ID || !config.AWS_SECRET_ACCESS_KEY || !config.AWS_REGION || !config.S3_BUCKET_NAME) {
+if (!config.OBJECT_STORAGE_ACCESS_KEY_ID || !config.OBJECT_STORAGE_SECRET_ACCESS_KEY || !config.OBJECT_STORAGE_REGION || !config.OBJECT_STORAGE_BUCKET_NAME) {
     console.warn(
         "WARNING: AWS S3 configuration is incomplete. Image upload functionality may not work." +
-        " Please check AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, and S3_BUCKET_NAME in your .env file."
+        " Please check OBJECT_STORAGE_ACCESS_KEY_ID, OBJECT_STORAGE_SECRET_ACCESS_KEY, OBJECT_STORAGE_REGION, and OBJECT_STORAGE_BUCKET_NAME in your .env file."
     );
 }
 

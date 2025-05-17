@@ -48,6 +48,27 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"CreatePostBase64Input": {
+				"properties": {
+					"imageBase64": {
+						"type": "string",
+						"description": "Base64 encoded image data.\nPenting: String ini TIDAK BOLEH menyertakan prefix data URI (misalnya, 'data:image/jpeg;base64,').\nKirim hanya bagian data base64 murninya."
+					},
+					"imageFileType": {
+						"type": "string",
+						"description": "MIME type dari gambar, contoh: \"image/jpeg\", \"image/png\".\nIni penting untuk S3 agar bisa mengatur ContentType dengan benar."
+					},
+					"caption": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"imageBase64",
+					"imageFileType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"CommentResponse": {
 				"properties": {
 					"id": {
@@ -418,6 +439,76 @@
 			}
 		},
 		"/posts": {
+			"post": {
+				"operationId": "CreatePost",
+				"responses": {
+					"201": {
+						"description": "Post Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePostBase64Input"
+							}
+						}
+					}
+				}
+			},
 			"get": {
 				"operationId": "GetFeedPosts",
 				"responses": {

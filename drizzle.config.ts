@@ -16,4 +16,5 @@ export default {
   },
   verbose: true,
   strict: true,
+  schemaFilter:["ins"],
 } satisfies Config;

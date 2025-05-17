@@ -120,7 +120,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
           placeholder="Write a caption..."
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500 text-sm"
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-gray-900"
           rows={3}
         />
       </div>

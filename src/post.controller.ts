@@ -200,10 +200,7 @@ export class PostController extends Controller {
       .from(posts)
       .innerJoin(users, eq(posts.userId, users.id))
       .where(
-        sql`"${customSchema.schemaName}".ins_posts.search_vector @@ plainto_tsquery('english', ${searchTerm})`
-      )
-      .orderBy(
-        sql`ts_rank_cd("${customSchema.schemaName}".ins_posts.search_vector, plainto_tsquery('english', ${searchTerm})) DESC`
+        sql`${posts.caption} @@ plainto_tsquery('english', ${searchTerm})`
       )
       .limit(limit)
       .offset(offset);

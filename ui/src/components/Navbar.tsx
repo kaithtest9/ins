@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-white border-b border-gray-200 shadow-sm p-4 sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-xl font-bold text-pink-600 hover:text-pink-700">
-          InstaReact
+          Leapcell Insta
         </Link>
         
         <form onSubmit={handleSearch} className="flex-grow max-w-xs mx-4">
@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
             placeholder="Search posts..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="p-2 border border-gray-300 rounded-md w-full focus:ring-pink-500 focus:border-pink-500 text-sm"
+            className="p-2 border border-gray-300 rounded-md w-full text-gray-900 bg-white focus:ring-pink-500 focus:border-pink-500 text-sm"
           />
         </form>
 

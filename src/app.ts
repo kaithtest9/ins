@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import appConfig from './config';
 import { RegisterRoutes } from './generated/routes';
 import { ValidateError } from 'tsoa';
+import path from 'path';
 
 const app = express();
 
@@ -18,6 +19,16 @@ app.use(cors({
 // 对于Base64图片，这个限制可能需要根据您的图片大小预期进行调整
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // 也为url-encoded增加限制
+
+const frontendDistPath = path.join(__dirname, '../ui/dist');
+app.use(express.static(frontendDistPath));
+console.log('Serving static files from', frontendDistPath);
+
+// Serve the frontend application
+app.get('/', (req, res) => {
+  console.log('Serving frontend application', frontendDistPath);
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
 
 // Tsoa Generated Routes
 RegisterRoutes(app);

@@ -10,7 +10,7 @@ import {
   primaryKey,
   customType,
   index,
-  pgSchema
+  pgSchema,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import appConfig from './config';
@@ -21,7 +21,7 @@ const tsvector = customType<{ data: string; driverData: string }>({
   },
 });
 
-export const customSchema = pgSchema("ins")
+export const customSchema = pgSchema("ins"); // Example of another schema
 
 // --- Schema Definition with 'ins_' prefix ---
 // 变量名保持不变 (users, posts 等)，方便代码其他部分引用
@@ -46,7 +46,7 @@ export const posts = customSchema.table('ins_posts', { // Prefixed
   searchVector: tsvector('search_vector'),
 }, (table) => ({
   userIdx: index('ins_posts_user_id_idx').on(table.userId), // Index name also prefixed for clarity
-  searchVectorIdx: index('ins_posts_search_vector_idx').on(table.searchVector).using(sql`gin`),
+  searchVectorIdx: index('ins_posts_search_vector_idx2').using('gin', sql`to_tsvector('english', ${table.caption})`),
 }));
 
 /*

@@ -63,7 +63,7 @@ const API_BASE_URL = '/api/v1'; // Vite会代理这个路径
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('authToken');
-  return token ? { 'Authorization': `Bearer ${token}` } : {};
+  return token ? { 'Authorization': `Bearer ${token}` } : {'Authorization': ''};
 };
 
 const handleResponse = async (response: Response) => {
